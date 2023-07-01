@@ -6,6 +6,6 @@ import { createTaskSchema } from "../schemas/tasks.schema";
 const tasksRouter=Router();
 
 tasksRouter.get("/tasks", tasksController.getAllTasks);
-// tasksRouter.post("/tasks", schemaValidationMiddleware(createTaskSchema));
+tasksRouter.post("/tasks", schemaValidationMiddleware(createTaskSchema), tasksController.postTask);
 
 export default tasksRouter;
