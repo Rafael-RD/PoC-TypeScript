@@ -44,12 +44,21 @@ export function checkTaskExistById(id: number){
     `, [id]);
 }
 
+export function deleteTask(id: number){
+    return db.query(`
+        DELETE FROM
+        tasks
+        WHERE id = $1;
+    `, [id]);
+}
+
 const tasksRepository={
     getAllTasks,
     createTask,
     checkTaskExist,
     checkTaskExistById,
-    updateTask
+    updateTask,
+    deleteTask
 }
 
 export default tasksRepository;

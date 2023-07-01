@@ -26,11 +26,18 @@ export async function getTaskById(id: number){
     return await tasksRepository.checkTaskExistById(id);
 }
 
+export async function deleteTask(id: number){
+    const existenceCheck=await getTaskById(id);
+    if(existenceCheck.rowCount === 0) throw {type: "NotFound", message: "Task not found"};
+    return await tasksRepository.deleteTask(id);
+}
+
 const tasksService={
     getAllTasks,
     createTask,
     checkTaskExist,
-    getTaskById
+    getTaskById,
+    deleteTask
 }
 
 export default tasksService;

@@ -23,13 +23,22 @@ export async function patchCompleteTask(req: Request, res: Response){
     if(typeof req.body.completed !== "boolean") return res.status(httpStatus.UNPROCESSABLE_ENTITY).send("Wrong status format");
 
     const updateLog= await updateTask(id, completed);
-    return res.status(httpStatus.NOT_IMPLEMENTED).send(typeof req.body.completed);
+    return res.status(httpStatus.ACCEPTED).send("Task updated");
+}
+
+export async function deleteTask(req: Request, res: Response){
+    const id= Number(req.params.id);
+    if(isNaN(id) || id<0) return res.status(httpStatus.UNPROCESSABLE_ENTITY).send("Param is not a valid number");
+
+    const deleteLog= await tasksService.deleteTask(id);
+    return res.status(httpStatus.ACCEPTED).send("Task deleted");
 }
 
 const tasksController={
     getAllTasks,
     postTask,
-    patchCompleteTask
+    patchCompleteTask,
+    deleteTask
 }
 
 export default tasksController;
