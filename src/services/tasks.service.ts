@@ -12,13 +12,25 @@ export async function createTask(task: Task){
 
 export async function checkTaskExist(task: Task){
     const existenceCheck= await tasksRepository.checkTaskExist(task);
-    return existenceCheck.rows.length !== 0;
+    return existenceCheck.rowCount !== 0;
+}
+
+export async function updateTask(id: number, completed: boolean){
+    const existenceCheck=await getTaskById(id);
+    if(existenceCheck.rowCount === 0) throw {type: "NotFound", message: "Task not found"};
+    if(existenceCheck.rows[0].completed === completed) throw {type: "SameStatus", message: "Task already has this status"}
+    return await tasksRepository.updateTask(id, completed);
+}
+
+export async function getTaskById(id: number){
+    return await tasksRepository.checkTaskExistById(id);
 }
 
 const tasksService={
     getAllTasks,
     createTask,
-    checkTaskExist
+    checkTaskExist,
+    getTaskById
 }
 
 export default tasksService;

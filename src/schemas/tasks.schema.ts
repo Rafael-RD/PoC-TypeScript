@@ -6,8 +6,15 @@ export const createTaskSchema=Joi.object<Task>({
     description: Joi.string().required(),
     date: Joi.string().required(),
     resposible: Joi.string().required(),
-})
+});
 
-// export const updateTaskSchema=Joi.object({
-//     completed: Joi.boolean().required()
-// })
+export const updateTaskSchema=Joi.object({
+    completed: Joi.boolean().required()
+});
+
+const taskSchemas={
+    createTaskSchema,
+    updateTaskSchema
+};
+
+export default taskSchemas;

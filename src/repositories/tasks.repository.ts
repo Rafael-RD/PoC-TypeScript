@@ -27,10 +27,29 @@ export function checkTaskExist(task: Task){
     `, [task.name, task.date, task.resposible]);
 }
 
+export function updateTask(id: number, completed: boolean){
+    return db.query(`
+        UPDATE tasks SET 
+        completed = $2,
+        updated = CURRENT_TIMESTAMP
+        WHERE id = $1;
+    `, [id, completed]);
+}
+
+export function checkTaskExistById(id: number){
+    return db.query<TaskQuery>(`
+        SELECT *
+        FROM tasks
+        WHERE id = $1;
+    `, [id]);
+}
+
 const tasksRepository={
     getAllTasks,
     createTask,
-    checkTaskExist
+    checkTaskExist,
+    checkTaskExistById,
+    updateTask
 }
 
 export default tasksRepository;
